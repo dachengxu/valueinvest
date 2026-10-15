@@ -1,16 +1,38 @@
 # AGENTS（本分支定制版）
 
-本分支 `docs/valuation-algorithms` 只维护 `valuation_algorithms.md`（估值方法论文档）这一份文件。`main` 分支保留给上游仓库（github.com/wangzhe3224/valueinvest）定时同步，**不要在 main 上提交本文档**，以免与上游同步产生冲突。
+本分支 `docs/valuation-algorithms` 只维护两个文件：
 
-## 分支切换注意
+- `valuation_algorithms.md` —— 估值方法论文档
+- `AGENTS.md` —— 本说明
 
-本分支是孤立分支（orphan，与 main 无共同历史），仓库其余文件在本分支上处于**未跟踪**状态。切回 main 需要强制切换：
+`main` 分支保留给上游仓库（github.com/wangzhe3224/valueinvest）定时同步，**不要在 main 上提交这两个文件**，以免与上游同步产生冲突。
+
+## 当前工作区状态
+
+本分支是孤立分支（orphan，与 main 无共同历史）。2026-10-15 已清理工作区：仓库其余文件均已移除，当前目录只有上面两个文件。若之后从 main 恢复过上游文件，它们在本分支上会重新变为未跟踪状态。
+
+## 分支切换
+
+切回 main（用于同步上游）：
 
 ```
-git checkout -f main
+git checkout main
 ```
 
-未跟踪文件与 main 内容一致，强制切换不会丢失改动；如在本分支上有未提交的文档修改，先提交再切换。日常在 main 同步上游（`git pull`）不受影响。
+- 工作区干净（只有两个已跟踪文件）时，普通切换即可；
+- 若存在未跟踪的上游文件，改用 `git checkout -f main`（未跟踪文件与 main 内容一致，不会丢改动）；
+- 在本分支有未提交的文档修改时，先提交再切换。
+
+## 核验文档时如何取库源码
+
+本分支工作区没有库代码，核对公式/阈值前先取回（二选一）：
+
+```
+git checkout main                          # 直接切换，用完 git checkout docs/valuation-algorithms 切回
+git worktree add ../valueinvest-src main   # 或另开工作区，互不干扰
+```
+
+`valueinvest/reports/` 曾被 .gitignore 忽略，如缺失可用 `git checkout origin/main -- valueinvest/reports/` 恢复。
 
 ## 修改 valuation_algorithms.md 之前
 
